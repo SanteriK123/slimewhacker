@@ -1,11 +1,10 @@
-$primary-color: #999;
-$secondary-color: #eece1a;
+$primary-color: #3d3d3d;
+$secondary-color: #45b4d6;
 $show-home-image: true;
 $home-image: url(../img/background.jpg);
 $background-opacity: 0.8;
 @import 'config';
 @import 'menu';
-
 @mixin background {
     @if $show-home-image {
         &#bg-img {
