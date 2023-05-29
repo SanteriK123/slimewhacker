@@ -28,8 +28,17 @@ $background-opacity: 0.8;
 @mixin easeOut {
     transition: all 0.5s ease-out;
 }
+// Set text color
+@function set-text-color($color) {
+    @if (lightness($color) > 40) {
+        @return #000;
 
-// Media Qurey Mixins
+    } @else {
+        @return #fff;
+    }
+}
+
+// Media Query Mixins
 @mixin mediaSm {
     @media screen and (max-width: 500px) {
         @content;
