@@ -1,0 +1,114 @@
+@import 'config';
+
+$primary-color: #006554;
+$secondary-color: #3e3b65;
+
+$bannerHeight: 15vh;
+$navbarHeight: 50px;
+$contentWidth: 70%;
+
+// Font initialization
+@font-face {
+  font-family: Connection;
+  src: url(/font/ConnectionIII.otf);
+}
+
+body {
+  background-clip: content-box;
+  background-image: url(/img/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: $primary-color;
+}
+.banner {
+  height: $bannerHeight;
+  background-image: url(/img/logo.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(94, 94, 94, 0.90);
+}
+
+.navbar {
+  height: $navbarHeight;
+  background-color: #333;
+  ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      margin-left: 10px;
+      a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        font-size: 40px;
+        margin-right: 20px;
+        @include easeOut;
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+.item {
+  &.current > a{
+    color: $primary-color;
+  }
+}
+.page {
+  height: 66.5vh;
+  border: 1rem ridge $primary-color;
+  background-color: $secondary-color;
+}
+.content {
+  margin: 0 auto;
+  max-width: $contentWidth;
+}
+
+// Home page
+
+.lg-heading {
+  display:inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 20px;
+  font-family: 'Connection';
+  font-size: 2em;
+  text-align: justify;
+  word-spacing: 10px;
+  color:#ffffff;
+  text-shadow: 3px 3px 2px darken(#006554,10);
+}
+
+.features {
+  display: grid;
+  grid-gap: 0.7rem;
+  grid-template-columns: repeat(4, 15vw);
+  padding-left: 10px;
+  padding-right: 10%;
+  img {
+    border: 3px $primary-color solid;
+    width: 100%;
+    image-rendering: pixelated;
+    @include easeOut;
+    &:hover {
+      width: 75%;
+      opacity: 0.5;
+      border-color: $secondary-color;
+    }
+  }
+  p {
+    text-align: center;
+    font-family: 'Connection';
+    font-size: 1.5vw;
+    color: #ffffff;
+    text-shadow: 3px 3px 2px darken(#006554,10);
+    word-spacing: 5px;
+  }
+}
+
+

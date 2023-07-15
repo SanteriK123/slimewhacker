@@ -1,0 +1,18 @@
+// Widescreens
+@include mediaXl {
+  .features {
+    grid-template-columns: repeat(1, 15vw);
+  }
+  .lg-heading {
+    font-size: 300px;
+  }
+}
+// Desktops & Laptops
+@include mediaLg {
+}
+// Tablets
+@include mediaMd {
+}
+// Smartphones
+@include mediaSm {
+}

@@ -1,0 +1,85 @@
+@font-face {
+  font-family: Connection;
+  src: url(/font/ConnectionIII.otf); }
+
+body {
+  background-clip: content-box;
+  background-image: url(/img/bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #006554; }
+
+.banner {
+  height: 15vh;
+  background-image: url(/img/logo.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(94, 94, 94, 0.9); }
+
+.navbar {
+  height: 50px;
+  background-color: #333; }
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+    .navbar ul li {
+      margin-left: 10px; }
+      .navbar ul li a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        font-size: 40px;
+        margin-right: 20px;
+        transition: all 0.5s ease; }
+        .navbar ul li a:hover {
+          color: #006554; }
+
+.item.current > a {
+  color: #006554; }
+
+.page {
+  height: 66.5vh;
+  border: 1rem ridge #006554;
+  background-color: #3e3b65; }
+
+.content {
+  margin: 0 auto;
+  max-width: 70%; }
+
+.lg-heading {
+  display: inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 20px;
+  font-family: 'Connection';
+  font-size: 2em;
+  text-align: justify;
+  word-spacing: 10px;
+  color: #ffffff;
+  text-shadow: 3px 3px 2px #00322a; }
+
+.features {
+  display: grid;
+  grid-gap: 0.7rem;
+  grid-template-columns: repeat(4, 15vw);
+  padding-left: 10px;
+  padding-right: 10%; }
+  .features img {
+    border: 3px #006554 solid;
+    width: 100%;
+    image-rendering: pixelated;
+    transition: all 0.5s ease; }
+    .features img:hover {
+      width: 75%;
+      opacity: 0.5;
+      border-color: #3e3b65; }
+  .features p {
+    text-align: center;
+    font-family: 'Connection';
+    font-size: 1.5vw;
+    color: #ffffff;
+    text-shadow: 3px 3px 2px #00322a;
+    word-spacing: 5px; }
