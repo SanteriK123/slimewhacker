@@ -1,0 +1,136 @@
+@font-face {
+  font-family: Connection;
+  src: url(/dist/font/ConnectionIII.otf); }
+
+body {
+  background-size: cover; }
+  body#bg {
+    background-clip: content-box;
+    background-image: url(/dist/img/bg.png);
+    background-repeat: no-repeat;
+    background-color: #006554;
+    background-position: center;
+    height: 100vh; }
+    body#bg:after {
+      content: "";
+      position: center;
+      z-index: -1; }
+
+.banner {
+  height: 15vh;
+  background-image: url(/dist/img/logo.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(94, 94, 94, 0.9); }
+
+.navbar {
+  height: 50px;
+  background-color: #333; }
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    justify-content: space-evenly; }
+    .navbar ul li {
+      margin-left: 10px; }
+      .navbar ul li a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        text-shadow: 4px 4px 4px #004136;
+        font-size: 45px;
+        font-family: "Connection";
+        margin-right: 20px;
+        transition: all 0.5s ease; }
+        .navbar ul li a:hover {
+          color: #006554; }
+
+.item.current > a {
+  color: #006554; }
+
+.page {
+  height: auto;
+  border: 1rem ridge #006554;
+  background-color: #3e3b65; }
+
+.game-page {
+  height: auto;
+  border: 1rem ridge #006554;
+  background-color: #3e3b65;
+  aspect-ratio: 2/1; }
+
+.content {
+  margin: 0 auto;
+  max-width: 70%; }
+
+.lg-heading {
+  display: inline-block;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 20px;
+  font-family: "Connection";
+  font-size: 2em;
+  text-align: left;
+  word-spacing: 10px;
+  color: #ffffff;
+  text-shadow: 3px 3px 2px #00322a; }
+  .lg-heading a:hover {
+    color: #006554; }
+
+.features {
+  display: grid;
+  grid-gap: 0.7rem;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(4, 15vw);
+  justify-content: space-evenly; }
+  .features img {
+    border: 3px #006554 solid;
+    width: 100%;
+    image-rendering: pixelated;
+    transition: all 0.5s ease; }
+    .features img:hover {
+      width: 75%;
+      opacity: 0.5;
+      border-color: #3e3b65; }
+  .features p {
+    text-align: center;
+    font-family: "Connection";
+    font-size: 1.5vw;
+    color: #ffffff;
+    text-shadow: 3px 3px 2px #00322a;
+    word-spacing: 5px; }
+
+@media screen and (min-width: 1171px) {
+  .features {
+    justify-content: center; } }
+
+@media screen and (min-width: 769px) and (max-width: 1170px) {
+  .features {
+    grid-template-columns: repeat(4, 15vw); } }
+
+@media screen and (max-width: 768px) {
+  .navbar ul li a {
+    font-size: 40px; }
+  .lg-heading {
+    font-size: 25px; }
+  .features {
+    grid-template-columns: repeat(2, 30vw); }
+    .features p {
+      font-size: 20px; }
+  .content {
+    max-width: 100%; } }
+
+@media screen and (max-width: 500px) {
+  .navbar ul li a {
+    font-size: 35px; }
+  .lg-heading {
+    font-size: 22px; }
+  .features {
+    grid-template-columns: repeat(2, 25vw); }
+    .features p {
+      font-size: 15px; }
+  .content {
+    max-width: 100%; } }
