@@ -6,8 +6,8 @@ $contentWidth: 70%;
 
 // Font initialization
 @font-face {
-  font-family: Connection;
-  src: url(/dist/font/ConnectionIII.otf);
+  font-family: "Connection";
+  src: url("../font/ConnectionIII.otf");
 }
 
 // Background styling
@@ -18,7 +18,7 @@ body {
 
 .banner {
   height: $bannerHeight;
-  background-image: url(/dist/img/logo.png);
+  background-image: url("../img/logo.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;

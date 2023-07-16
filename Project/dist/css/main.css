@@ -1,12 +1,12 @@
 @font-face {
-  font-family: Connection;
-  src: url(/dist/font/ConnectionIII.otf); }
+  font-family: "Connection";
+  src: url("../font/ConnectionIII.otf"); }
 
 body {
   background-size: cover; }
   body#bg {
     background-clip: content-box;
-    background-image: url(/dist/img/bg.png);
+    background-image: url("../img/bg.png");
     background-repeat: no-repeat;
     background-color: #006554;
     background-position: center;
@@ -18,7 +18,7 @@ body {
 
 .banner {
   height: 15vh;
-  background-image: url(/dist/img/logo.png);
+  background-image: url("../img/logo.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -121,11 +121,11 @@ body {
     .features p {
       font-size: 20px; }
   .content {
-    max-width: 100%; } }
+    max-width: 90%; } }
 
 @media screen and (max-width: 500px) {
   .navbar ul li a {
-    font-size: 35px; }
+    font-size: 25px; }
   .lg-heading {
     font-size: 22px; }
   .features {
@@ -133,4 +133,6 @@ body {
     .features p {
       font-size: 15px; }
   .content {
-    max-width: 100%; } }
+    max-width: 90%; }
+  .game-page {
+    aspect-ratio: 2.5/1; } }

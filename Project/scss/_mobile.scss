@@ -31,7 +31,7 @@
     }
   }
   .content {
-    max-width: 100%;
+    max-width: 90%;
   }
 }
 // Smartphones
@@ -40,7 +40,7 @@
     ul {
       li {
         a {
-          font-size: 35px;
+          font-size: 25px;
         }
       }
     }
@@ -55,6 +55,9 @@
     }
   }
   .content {
-    max-width: 100%;
+    max-width: 90%;
+  }
+  .game-page {
+    aspect-ratio: 2.5/1;
   }
 }

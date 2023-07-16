@@ -1,7 +1,7 @@
 $primary-color: #006554;
 $secondary-color: #3e3b65;
 $show-bg-image: true;
-$bg-image: url(/dist/img/bg.png);
+$bg-image: url("../img/bg.png");
 
 @mixin background {
   @if $show-bg-image {
