@@ -42,7 +42,6 @@ class Menu extends Phaser.Scene {
 
   startGame(isMobile) {
     this.sound.stopAll();
-    console.log(isMobile);
     this.scene.start("PlayGame", { value: isMobile });
   }
 }
