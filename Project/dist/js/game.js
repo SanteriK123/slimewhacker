@@ -1,5 +1,5 @@
 import { createWalker, increaseArraySize } from "./components/generator.js";
-let gameCanvas = document.getElementById('game');
+let gameCanvas = document.getElementById("game");
 
 let game;
 
@@ -90,7 +90,17 @@ class PlayGame extends Phaser.Scene {
     this.level = 0;
   }
 
+  init(data) {
+    this.isMobile = data.value;
+  }
+
   preload() {
+    this.load.plugin(
+      "rexvirtualjoystickplugin",
+      "https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js",
+      true
+    );
+
     this.load.image("tileset", "assets/tiles/tiles.png");
     this.load.image("exit", "assets/tiles/exit.png");
     this.load.image("healthpack", "assets/tiles/healthpack.png");
@@ -98,6 +108,11 @@ class PlayGame extends Phaser.Scene {
     this.load.image("movementboost", "assets/tiles/mspeed.png");
     this.load.image("speedboost", "assets/tiles/aspeed.png");
     this.load.image("trophy", "assets/tiles/trophy.png");
+    this.load.image("fullscreen", "assets/cursor.png");
+    this.load.image("base", "assets/baseCircle.png");
+    this.load.image("thumb", "assets/thumbCircle.png");
+    this.load.image("interactActive", "assets/interact.png");
+    this.load.image("interactInactive", "assets/interactGray.png");
 
     this.load.spritesheet("melee", "assets/bat.png", {
       frameWidth: 48,
@@ -177,7 +192,6 @@ class PlayGame extends Phaser.Scene {
     } else if (this.level >= 7) {
       this.bossLevel = true;
     }
-
     this.input.setDefaultCursor("url(assets/cursor.png), pointer");
 
     // Generate dungeon array, add a bunch of walls around the array to prevent player from escaping
@@ -393,7 +407,7 @@ class PlayGame extends Phaser.Scene {
       this
     );
 
-    // Camera and keyboard settings
+    // Camera and keyboard/mobile controls
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(2);
     this.cameras.main.setBounds(
@@ -409,6 +423,47 @@ class PlayGame extends Phaser.Scene {
       right: "D",
       space: "space",
     });
+
+    this.base = this.add.image(0, 0, "base").setDepth(10);
+    this.thumb = this.physics.add.image(0, 0, "thumb").setDepth(10);
+
+    this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
+      x: uiX * 3 - 50,
+      y: uiY * 3 - 50,
+      radius: 20,
+      base: this.base,
+      thumb: this.thumb,
+      dir: "8dir",
+      forceMin: 16,
+    });
+    this.joystick.setVisible(false);
+
+    this.interactDown = false;
+
+    if (this.isMobile) {
+      this.joystick.setVisible(true);
+      this.interact = this.add.image(
+        uiX * 3 - 50,
+        uiY * 3 - 120,
+        "interactInactive"
+      );
+      this.interact.setInteractive().setDepth(10).setScrollFactor(0);
+      console.log("hey");
+      this.interact.on(
+        "pointerdown",
+        function (event) {
+          this.interactDown = true;
+        },
+        this
+      );
+      this.interact.on(
+        "pointerup",
+        function (event) {
+          this.interactDown = false;
+        },
+        this
+      );
+    }
 
     // Animations
     this.anims.create({
@@ -524,7 +579,10 @@ class PlayGame extends Phaser.Scene {
   }
 
   exitLevel() {
-    if (this.keys.space.isDown && this.enemyGroup.getLength() <= 0) {
+    if (
+      (this.keys.space.isDown || this.interactDown) &&
+      this.enemyGroup.getLength() <= 0
+    ) {
       this.level += 1;
       this.scene.start("PlayGame");
     }
@@ -646,22 +704,22 @@ class PlayGame extends Phaser.Scene {
       this.frameTime = 0;
 
       // Player Movement
-      if (this.keys.left.isDown) {
+      if (this.keys.left.isDown || this.joystick.left) {
         this.player.body.velocity.x = -playerStats.speed;
         this.player.body.velocity.y = 0;
         this.player.anims.play("left", true);
         lastDirection = "left";
-      } else if (this.keys.right.isDown) {
+      } else if (this.keys.right.isDown || this.joystick.right) {
         this.player.body.velocity.x = playerStats.speed;
         this.player.body.velocity.y = 0;
         this.player.anims.play("right", true);
         lastDirection = "right";
-      } else if (this.keys.up.isDown) {
+      } else if (this.keys.up.isDown || this.joystick.up) {
         this.player.body.velocity.y = -playerStats.speed;
         this.player.body.velocity.x = 0;
         this.player.anims.play("up", true);
         lastDirection = "up";
-      } else if (this.keys.down.isDown) {
+      } else if (this.keys.down.isDown || this.joystick.down) {
         this.player.body.velocity.y = playerStats.speed;
         this.player.body.velocity.x = 0;
         this.player.anims.play("down", true);
@@ -680,16 +738,28 @@ class PlayGame extends Phaser.Scene {
         }
       }
 
-      if (this.keys.left.isDown && this.keys.up.isDown) {
+      if (
+        (this.keys.left.isDown && this.keys.up.isDown) ||
+        (this.joystick.left && this.joystick.up)
+      ) {
         this.player.body.velocity.x = -playerStats.diagSpeed;
         this.player.body.velocity.y = -playerStats.diagSpeed;
-      } else if (this.keys.right.isDown && this.keys.up.isDown) {
+      } else if (
+        (this.keys.right.isDown && this.keys.up.isDown) ||
+        (this.joystick.right && this.joystick.up)
+      ) {
         this.player.body.velocity.x = playerStats.diagSpeed;
         this.player.body.velocity.y = -playerStats.diagSpeed;
-      } else if (this.keys.right.isDown && this.keys.down.isDown) {
+      } else if (
+        (this.keys.right.isDown && this.keys.down.isDown) ||
+        (this.joystick.right && this.joystick.down)
+      ) {
         this.player.body.velocity.x = playerStats.diagSpeed;
         this.player.body.velocity.y = playerStats.diagSpeed;
-      } else if (this.keys.left.isDown && this.keys.down.isDown) {
+      } else if (
+        (this.keys.left.isDown && this.keys.down.isDown) ||
+        (this.joystick.left && this.joystick.down)
+      ) {
         this.player.body.velocity.x = -playerStats.diagSpeed;
         this.player.body.velocity.y = playerStats.diagSpeed;
       }

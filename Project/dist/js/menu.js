@@ -6,11 +6,13 @@ class Menu extends Phaser.Scene {
     this.load.image("start", "assets/start.png");
     this.load.image("starthover", "assets/starthover.png");
     this.load.image("bg", "assets/bg.png");
+    this.load.image("fullscreen", "assets/cursor.png");
     this.load.audio("mainmenumusic", "assets/sounds/mainmenu.ogg");
   }
   create() {
     // Create start menu screen and add the background image and buttons in
     let start = this.add.sprite(480, 280, "start").setInteractive().setDepth(2);
+    this.isMobile = false;
     let bg = this.add.image(0, 0, "bg");
     this.sound.add("mainmenumusic");
     this.sound.play("mainmenumusic");
@@ -24,14 +26,23 @@ class Menu extends Phaser.Scene {
     start.on(
       "pointerdown",
       function (event) {
-        this.startGame();
+        this.startGame(this.isMobile);
+      },
+      this
+    );
+    start.on(
+      "touchstart",
+      function (event) {
+        this.isMobile = true;
+        this.startGame(this.isMobile);
       },
       this
     );
   }
 
-  startGame() {
+  startGame(isMobile) {
     this.sound.stopAll();
-    this.scene.start("PlayGame");
+    console.log(isMobile);
+    this.scene.start("PlayGame", { value: isMobile });
   }
 }

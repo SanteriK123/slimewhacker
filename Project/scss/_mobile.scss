@@ -1,18 +1,60 @@
 // Widescreens
 @include mediaXl {
   .features {
-    grid-template-columns: repeat(1, 15vw);
-  }
-  .lg-heading {
-    font-size: 300px;
+    justify-content: center;
   }
 }
 // Desktops & Laptops
 @include mediaLg {
+  .features {
+    grid-template-columns: repeat(4, 15vw);
+  }
 }
 // Tablets
 @include mediaMd {
+  .navbar {
+    ul {
+      li {
+        a {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+  .lg-heading {
+    font-size: 25px;
+  }
+  .features {
+    grid-template-columns: repeat(2, 30vw);
+    p {
+      font-size: 20px;
+    }
+  }
+  .content {
+    max-width: 100%;
+  }
 }
 // Smartphones
 @include mediaSm {
+  .navbar {
+    ul {
+      li {
+        a {
+          font-size: 35px;
+        }
+      }
+    }
+  }
+  .lg-heading {
+    font-size: 22px;
+  }
+  .features {
+    grid-template-columns: repeat(2, 25vw);
+    p {
+      font-size: 15px;
+    }
+  }
+  .content {
+    max-width: 100%;
+  }
 }

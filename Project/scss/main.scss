@@ -1,7 +1,4 @@
-@import 'config';
-
-$primary-color: #006554;
-$secondary-color: #3e3b65;
+@import "config";
 
 $bannerHeight: 15vh;
 $navbarHeight: 50px;
@@ -13,37 +10,42 @@ $contentWidth: 70%;
   src: url(/font/ConnectionIII.otf);
 }
 
+// Background styling
 body {
-  background-clip: content-box;
-  background-image: url(/img/bg.png);
+  @include background;
   background-size: cover;
-  background-repeat: no-repeat;
-  background-color: $primary-color;
 }
+
 .banner {
   height: $bannerHeight;
   background-image: url(/img/logo.png);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size: contain;
   background-position: center;
-  background-color: rgba(94, 94, 94, 0.90);
+  background-repeat: no-repeat;
+  background-color: rgba(94, 94, 94, 0.9);
 }
 
+
+// Navigation
 .navbar {
   height: $navbarHeight;
   background-color: #333;
   ul {
     display: flex;
     list-style: none;
+    flex-direction: row;
     padding: 0;
     margin: 0;
+    justify-content: space-evenly;
     li {
       margin-left: 10px;
       a {
         display: block;
         color: #fff;
         text-decoration: none;
-        font-size: 40px;
+        text-shadow: 4px 4px 4px darken($primary-color, 7);
+        font-size: 45px;
+        font-family: "Connection";
         margin-right: 20px;
         @include easeOut;
         &:hover {
@@ -55,41 +57,53 @@ body {
 }
 
 .item {
-  &.current > a{
+  &.current > a {
     color: $primary-color;
   }
 }
+
+// Main page container styling
 .page {
-  height: 66.5vh;
+  height: auto;
   border: 1rem ridge $primary-color;
   background-color: $secondary-color;
+}
+.game-page {
+  height: auto;
+  border: 1rem ridge $primary-color;
+  background-color: $secondary-color;
+  aspect-ratio: 2/1;
 }
 .content {
   margin: 0 auto;
   max-width: $contentWidth;
 }
 
-// Home page
-
 .lg-heading {
-  display:inline-block;
+  display: inline-block;
   margin-left: 3%;
   margin-right: 3%;
   margin-top: 20px;
-  font-family: 'Connection';
+  font-family: "Connection";
   font-size: 2em;
-  text-align: justify;
+  text-align: left;
   word-spacing: 10px;
-  color:#ffffff;
-  text-shadow: 3px 3px 2px darken(#006554,10);
+  color: #ffffff;
+  text-shadow: 3px 3px 2px darken(#006554, 10);
+  a {
+    &:hover {
+      color: $primary-color;
+    }
+  }
 }
 
+// Home page grid styling
 .features {
   display: grid;
   grid-gap: 0.7rem;
+  grid-template-rows: 1fr;
   grid-template-columns: repeat(4, 15vw);
-  padding-left: 10px;
-  padding-right: 10%;
+  justify-content: space-evenly;
   img {
     border: 3px $primary-color solid;
     width: 100%;
@@ -103,12 +117,12 @@ body {
   }
   p {
     text-align: center;
-    font-family: 'Connection';
+    font-family: "Connection";
     font-size: 1.5vw;
     color: #ffffff;
-    text-shadow: 3px 3px 2px darken(#006554,10);
+    text-shadow: 3px 3px 2px darken(#006554, 10);
     word-spacing: 5px;
   }
 }
 
-
+@import "mobile";
