@@ -1,5 +1,5 @@
 @font-face {
-  font-family: Connection;
+  font-family: "Connection";
   src: url("../font/ConnectionIII.otf"); }
 
 body {
@@ -121,11 +121,11 @@ body {
     .features p {
       font-size: 20px; }
   .content {
-    max-width: 100%; } }
+    max-width: 90%; } }
 
 @media screen and (max-width: 500px) {
   .navbar ul li a {
-    font-size: 35px; }
+    font-size: 25px; }
   .lg-heading {
     font-size: 22px; }
   .features {
@@ -133,4 +133,6 @@ body {
     .features p {
       font-size: 15px; }
   .content {
-    max-width: 100%; } }
+    max-width: 90%; }
+  .game-page {
+    aspect-ratio: 2.5/1; } }

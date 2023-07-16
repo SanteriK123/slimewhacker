@@ -61,7 +61,7 @@ window.onload = function () {
     backgroundColor: "#3e3b65",
     scale: {
       parent: gameCanvas,
-      mode: Phaser.Scale.FIT,
+      mode: Phaser.Scale.CONTAIN,
       width: 960,
       height: 480,
     },
@@ -448,7 +448,6 @@ class PlayGame extends Phaser.Scene {
         "interactInactive"
       );
       this.interact.setInteractive().setDepth(10).setScrollFactor(0);
-      console.log("hey");
       this.interact.on(
         "pointerdown",
         function (event) {
