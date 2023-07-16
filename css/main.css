@@ -1,12 +1,12 @@
 @font-face {
   font-family: Connection;
-  src: url(/dist/font/ConnectionIII.otf); }
+  src: url("../font/ConnectionIII.otf"); }
 
 body {
   background-size: cover; }
   body#bg {
     background-clip: content-box;
-    background-image: url(/dist/img/bg.png);
+    background-image: url("../img/bg.png");
     background-repeat: no-repeat;
     background-color: #006554;
     background-position: center;
@@ -18,7 +18,7 @@ body {
 
 .banner {
   height: 15vh;
-  background-image: url(/dist/img/logo.png);
+  background-image: url("../img/logo.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
