@@ -90,10 +90,6 @@ class PlayGame extends Phaser.Scene {
     this.level = 0;
   }
 
-  init(data) {
-    this.isMobile = data.value;
-  }
-
   preload() {
     this.load.plugin(
       "rexvirtualjoystickplugin",
@@ -111,8 +107,11 @@ class PlayGame extends Phaser.Scene {
     this.load.image("fullscreen", "assets/cursor.png");
     this.load.image("base", "assets/baseCircle.png");
     this.load.image("thumb", "assets/thumbCircle.png");
-    this.load.image("interactActive", "assets/interact.png");
-    this.load.image("interactInactive", "assets/interactGray.png");
+    this.load.image("interact", "assets/interact.png");
+    this.load.image("up", "assets/upBtn.png");
+    this.load.image("down", "assets/downBtn.png");
+    this.load.image("left", "assets/leftBtn.png");
+    this.load.image("right", "assets/rightBtn.png");
 
     this.load.spritesheet("melee", "assets/bat.png", {
       frameWidth: 48,
@@ -280,35 +279,35 @@ class PlayGame extends Phaser.Scene {
       .setDepth(10);
     this.uiDamage = this.add
       .text(5 + uiX, -60 + uiY * 3, "\u{1F4AA}" + playerStats.damage, {
-        fontFamily: "ConnectionIII",
+        fontFamily: "Connection",
       })
       .setScrollFactor(0)
       .setDepth(10)
       .setColor("red");
     this.uiMoveSpeed = this.add
       .text(5 + uiX, -40 + uiY * 3, "\u{1F97E} " + playerStats.speed, {
-        fontFamily: "ConnectionIII",
+        fontFamily: "Connection",
       })
       .setScrollFactor(0)
       .setDepth(10)
       .setColor("green");
     this.uiAttackSpeed = this.add
       .text(5 + uiX, -20 + uiY * 3, "\u{1F52A} " + playerStats.attackSpeed, {
-        fontFamily: "ConnectionIII",
+        fontFamily: "Connection",
       })
       .setScrollFactor(0)
       .setDepth(10)
       .setColor("blue");
     this.uiLevelFinished = this.add
       .text(uiX + 130, uiY * 3 - 30, "Level cleared, proceed further", {
-        fontFamily: "ConnectionIII",
+        fontFamily: "Connection",
       })
       .setScrollFactor(0)
       .setDepth(10)
       .setAlpha(0);
     this.uiBossLevelFinished = this.add
       .text(uiX + 130, uiY * 3 - 30, "Boss defeated, get your trophy!", {
-        fontFamily: "ConnectionIII",
+        fontFamily: "Connection",
       })
       .setScrollFactor(0)
       .setDepth(10)
@@ -428,26 +427,28 @@ class PlayGame extends Phaser.Scene {
     this.thumb = this.physics.add.image(0, 0, "thumb").setDepth(10);
 
     this.joystick = this.plugins.get("rexvirtualjoystickplugin").add(this, {
-      x: uiX * 3 - 50,
-      y: uiY * 3 - 50,
-      radius: 20,
+      x: uiX * 3 - 75,
+      y: uiY * 3 - 100,
+      radius: 32,
       base: this.base,
       thumb: this.thumb,
       dir: "8dir",
-      forceMin: 16,
+      fixed: true,
+      //forceMin: 16,
     });
     this.joystick.setVisible(false);
 
     this.interactDown = false;
 
-    if (this.isMobile) {
+    this.isDesktop = this.sys.game.device.os.desktop;
+
+    if (!this.isDesktop) {
       this.joystick.setVisible(true);
       this.interact = this.add.image(
-        uiX * 3 - 50,
-        uiY * 3 - 120,
-        "interactInactive"
-      );
-      this.interact.setInteractive().setDepth(10).setScrollFactor(0);
+        uiX * 3 - 75,
+        uiY * 3 - 170,
+        "interact"
+      ).setInteractive().setDepth(10).setScrollFactor(0);
       this.interact.on(
         "pointerdown",
         function (event) {
@@ -462,6 +463,10 @@ class PlayGame extends Phaser.Scene {
         },
         this
       );
+      this.up = this.add.image(uiX+70, uiY*2-50,"up").setInteractive().setDepth(10).setScrollFactor(0);
+      this.down = this.add.image(uiX+70, uiY*2,"down").setInteractive().setDepth(10).setScrollFactor(0);
+      this.left = this.add.image(uiX+35, uiY*2-25,"left").setInteractive().setDepth(10).setScrollFactor(0);
+      this.right = this.add.image(uiX+105, uiY*2-25,"right").setInteractive().setDepth(10).setScrollFactor(0);
     }
 
     // Animations
@@ -778,46 +783,101 @@ class PlayGame extends Phaser.Scene {
         playerStats.immune = false;
       }
 
-      // Player melee
-      this.input.on("pointerdown", (pointer) => {
-        if (!playerStats.melee) {
-          this.sound.play("swing");
-          let angle = this.getAngle(
-            this.input.mousePointer.x,
-            this.input.mousePointer.y,
-            game.config.width / 2,
-            game.config.height / 2
-          );
-          this.meleeHit.enableBody(true, 0, 0, true, true);
-          if (angle > 45 && angle < 135) {
+      // Player melee, first mouse then mobile control
+      if (this.isDesktop) {
+        this.input.on("pointerdown", (pointer) => {
+          if (!playerStats.melee) {
+            this.sound.play("swing");
+            let angle = this.getAngle(
+              this.input.mousePointer.x,
+              this.input.mousePointer.y,
+              game.config.width / 2,
+              game.config.height / 2
+            );
+            this.meleeHit.enableBody(true, 0, 0, true, true);
+            if (angle > 45 && angle < 135) {
+              this.meleeHit.angle = 0;
+              this.meleeHit.setPosition(
+                8 + this.player.body.x,
+                this.player.body.y - 8
+              );
+            } else if (angle < 45 && angle > -45) {
+              this.meleeHit.angle = -90;
+              this.meleeHit.setPosition(
+                this.player.body.x - 8,
+                this.player.body.y + 8
+              );
+            } else if (angle < -45 && angle > -135) {
+              this.meleeHit.angle = -180;
+              this.meleeHit.setPosition(
+                8 + this.player.body.x,
+                this.player.body.y + 24
+              );
+            } else {
+              this.meleeHit.angle = 90;
+              this.meleeHit.setPosition(
+                24 + this.player.body.x,
+                this.player.body.y + 6
+              );
+            }
+            playerStats.melee = true;
+            this.meleeHit.anims.play("melee");
+          }
+        });
+      } else {
+        this.up.on("pointerdown", function (event) {
+          if (!playerStats.melee) {
+            this.sound.play("swing");
+            this.meleeHit.enableBody(true, 0, 0, true, true);
             this.meleeHit.angle = 0;
             this.meleeHit.setPosition(
               8 + this.player.body.x,
               this.player.body.y - 8
             );
-          } else if (angle < 45 && angle > -45) {
+            playerStats.melee = true;
+            this.meleeHit.anims.play("melee");
+          }
+        }, this) 
+        this.left.on("pointerdown", function (event) {
+          if (!playerStats.melee) {
+            this.sound.play("swing");
+            this.meleeHit.enableBody(true, 0, 0, true, true);
             this.meleeHit.angle = -90;
             this.meleeHit.setPosition(
               this.player.body.x - 8,
               this.player.body.y + 8
             );
-          } else if (angle < -45 && angle > -135) {
+            playerStats.melee = true;
+            this.meleeHit.anims.play("melee");
+          }
+        }, this) 
+        this.down.on("pointerdown", function (event) {
+          if (!playerStats.melee) {
+            this.sound.play("swing");
+            this.meleeHit.enableBody(true, 0, 0, true, true);
             this.meleeHit.angle = -180;
             this.meleeHit.setPosition(
               8 + this.player.body.x,
               this.player.body.y + 24
             );
-          } else {
+            playerStats.melee = true;
+            this.meleeHit.anims.play("melee");
+          }
+        }, this) 
+        this.right.on("pointerdown", function (event) {
+          if (!playerStats.melee) {
+            this.sound.play("swing");
+            this.meleeHit.enableBody(true, 0, 0, true, true);
             this.meleeHit.angle = 90;
             this.meleeHit.setPosition(
               24 + this.player.body.x,
               this.player.body.y + 6
             );
+            playerStats.melee = true;
+            this.meleeHit.anims.play("melee");
           }
-          playerStats.melee = true;
-          this.meleeHit.anims.play("melee");
-        }
-      });
+        }, this) 
+      }
       if (playerStats.melee) {
         meleeTimer++;
         if (this.meleeHit.angle == 0) {
