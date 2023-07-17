@@ -10,11 +10,11 @@ $bg-image: url("../img/bg.png");
       background-image: $bg-image;
       background-repeat: no-repeat;
       background-color: $primary-color;
-      background-position: center;
-      height: 100vh;
+      background-attachment: fixed;
+      background-size: cover;
+      min-height:100%;
       &:after {
         content: "";
-        position: center;
         z-index: -1;
       }
     }

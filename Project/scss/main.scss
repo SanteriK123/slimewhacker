@@ -13,7 +13,6 @@ $contentWidth: 70%;
 // Background styling
 body {
   @include background;
-  background-size: cover;
 }
 
 .banner {
@@ -125,3 +124,4 @@ body {
 }
 
 @import "mobile";
+

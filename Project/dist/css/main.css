@@ -2,19 +2,17 @@
   font-family: "Connection";
   src: url("../font/ConnectionIII.otf"); }
 
-body {
-  background-size: cover; }
-  body#bg {
-    background-clip: content-box;
-    background-image: url("../img/bg.png");
-    background-repeat: no-repeat;
-    background-color: #006554;
-    background-position: center;
-    height: 100vh; }
-    body#bg:after {
-      content: "";
-      position: center;
-      z-index: -1; }
+body#bg {
+  background-clip: content-box;
+  background-image: url("../img/bg.png");
+  background-repeat: no-repeat;
+  background-color: #006554;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100%; }
+  body#bg:after {
+    content: "";
+    z-index: -1; }
 
 .banner {
   height: 15vh;
@@ -133,6 +131,4 @@ body {
     .features p {
       font-size: 15px; }
   .content {
-    max-width: 90%; }
-  .game-page {
-    aspect-ratio: 2.5/1; } }
+    max-width: 100%; } }

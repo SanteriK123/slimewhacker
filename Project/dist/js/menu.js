@@ -24,24 +24,16 @@ class Menu extends Phaser.Scene {
       this.setTexture("start");
     });
     start.on(
-      "touchstart",
-      function (event) {
-        this.isMobile = true;
-        this.startGame(this.isMobile);
-      },
-      this
-    );
-    start.on(
       "pointerdown",
       function (event) {
-        this.startGame(this.isMobile);
+        this.startGame();
       },
       this
     );
   }
 
-  startGame(isMobile) {
+  startGame() {
     this.sound.stopAll();
-    this.scene.start("PlayGame", { value: isMobile });
+    this.scene.start("PlayGame");
   }
 }
